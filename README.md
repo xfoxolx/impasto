@@ -38,7 +38,7 @@
 The name is the technique the wallpapers are painted in: paint laid on thick
 enough to keep the mark of the brush. It is a shell first and a dotfiles
 repository second — `home/.config/quickshell` is most of the code, and the rest
-of `home/` is the desk around it: the terminal, the prompt, two editors, two
+of `home/` is the desk around it: the terminal, the prompt, an editor, two
 file managers, a browser, a chat client, the login screen. **Change the
 wallpaper and all of it follows.**
 
@@ -92,7 +92,7 @@ monitor over DDC/CI.
 
 **The palette comes out of the painting.** Pick a wallpaper and its colours
 reach everything at once: the island and the widgets, the terminal, neovim,
-VSCodium, the GTK and Qt windows, Nautilus down to its folders, Vesktop, Zen
+the GTK and Qt windows, Nautilus down to its folders, Vesktop, Zen
 and Spotify. Thirty-three paintings come with it, and a video can be the wallpaper
 too.
 
@@ -154,7 +154,7 @@ up the login screen, the plugins and the programs around the shell. Run
 | `--skip-packages` | install nothing; copy and build only |
 | `--skip-system` | leave `/` alone — no login screen, no printing, and no password for it |
 | `--skip-plugins` | no shake to find, no glass |
-| `--skip-extras` | leave Nautilus, VSCodium, Vesktop, Spotify, GTK, face unlock, the camera and the boot splash alone |
+| `--skip-extras` | leave Nautilus, Vesktop, Spotify, GTK, face unlock, the camera and the boot splash alone |
 | `--shell-only` | only the shell and Hyprland: `~/.config/quickshell`, `~/.config/hypr` (never its `custom/` folder), the shell's data, the wallpapers and the `impasto` command. The packages are the full list, and `--skip-packages` installs none. No `/`, no plugins, no extras, no other program's config, and the palette is written to none of the other programs until you choose some in Settings › Appearance. Remembered, so `update` and `sync` keep to it, and `./setup report` says what it left out |
 | `--full` | everything again, and forget `--shell-only` |
 | `--aur-helper yay\|paru` | which helper builds the AUR half — built from the AUR if you have neither |
@@ -212,7 +212,6 @@ Settings → Keys instead.
 | 📁 | File manager | [yazi](https://yazi-rs.github.io) |
 | 🗂️ | File manager in a window | [Nautilus](https://apps.gnome.org/Nautilus/) |
 | ✏️ | Editor | [neovim](https://neovim.io) |
-| 📝 | Editor in a window | [VSCodium](https://vscodium.com) |
 | 🖼️ | Image viewer | [imv](https://sr.ht/~exec64/imv/) |
 | 🪄 | Annotator | [satty](https://github.com/gabm/Satty) |
 | 💬 | Chat | [Vesktop](https://github.com/Vencord/Vesktop) |

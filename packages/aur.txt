@@ -42,7 +42,6 @@ lavat                        # the lava function
 
 # ── THEMED APPLICATIONS ─────────────────────────────────────────────────────
 
-vscodium-bin                 # extensions and settings · ./setup vscodium
 zen-browser-bin
 vesktop-bin
 spotify

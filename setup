@@ -177,7 +177,6 @@ Usage: ./setup <command> [options]
   defaults    what opens which file, and dark GTK with the impasto icons
   cursors     fetch the vector cursor and build it in the chosen colour
   spotify     patch Spotify so it takes the palette (needs spicetify)
-  vscodium    install the editor's extensions and merge its settings
   nautilus    apply the file manager's settings and sidebar
   vesktop     tick the palette's theme in Vencord
   face        unlock the lock screen with your face, where there is an
@@ -1104,7 +1103,7 @@ verb_report() {
         say "left     the plugins: glass on the windows, shake to find the pointer — ./setup plugins"
     fi
     names=()
-    for package in defaults cursors spotify vscodium nautilus vesktop face camera splash; do
+    for package in defaults cursors spotify nautilus vesktop face camera splash; do
         applied "$package" || names+=("$package")
     done
     if (( ${#names[@]} )); then
@@ -1253,8 +1252,7 @@ verb_uninstall() {
 # ── EXTRAS ──────────────────────────────────────────────────────────────────
 #
 # What a copied file cannot hold: what opens which file, dark GTK, the cursor,
-# Nautilus, VSCodium, Vesktop, Spotify, face unlock, the camera effects and the
-# boot splash.
+# Nautilus, Vesktop, Spotify, face unlock, the camera effects and the boot splash.
 # `install` sets each up once per machine, and one that cannot run yet is
 # skipped with the reason and tried again by the next install or update.
 # After that only its own verb runs it, so a setting changed in one of those
@@ -1284,7 +1282,6 @@ extras() {
     applied defaults || soft defaults verb_defaults
     if [[ ! -d $CURSOR_SEED ]]; then soft cursors verb_cursors; fi
     applied nautilus || soft nautilus verb_nautilus
-    applied vscodium || soft vscodium verb_vscodium
     applied vesktop || soft vesktop verb_vesktop
     applied face || soft face verb_face
     applied camera || soft camera verb_camera
@@ -1404,40 +1401,6 @@ verb_spotify() {
     act spicetify apply >/dev/null 2>&1 || act spicetify backup apply || refuse 'spicetify failed' || return
     stamp spotify
     say ok
-}
-
-# The palette push writes the colour theme and keeps the font and palette keys
-# current; this merges the rest of settings.json. Only the extensions the look
-# is made of, from Open VSX; --force makes a re-run upgrade them.
-VSCODIUM_EXTENSIONS=(
-    pkief.material-icon-theme
-    miguelsolorio.fluent-icons
-    usernamehw.errorlens
-    oderwat.indent-rainbow
-)
-
-verb_vscodium() {
-    section vscodium
-    command -v codium >/dev/null || refuse 'vscodium is not installed' || return
-    local e missed=0
-    for e in "${VSCODIUM_EXTENSIONS[@]}"; do
-        if act codium --install-extension "$e" --force >/dev/null 2>&1; then
-            say "$e"
-        else
-            say "$e FAILED — not on Open VSX, or no network"
-            missed=1
-        fi
-    done
-    local status=0
-    act python3 "$THEME_MANAGER" apply-vscodium || status=$?
-    if (( status == 3 )); then
-        say 'left alone — switched off in Settings › Appearance › Applications'
-        return 0
-    fi
-    (( status == 0 )) || refuse 'settings.json was not merged' || return
-    say 'settings merged — the theme lands on the next window'
-    # A missed extension leaves it for the next install to try again.
-    if (( ! missed )); then stamp vscodium; fi
 }
 
 # Vencord loads only a theme ticked in its own settings. The palette push
@@ -1880,7 +1843,7 @@ parts() {
                 packages) note="$pacman from the repositories, $aur from the AUR" ;;
                 system)   note='sddm, unless this machine already has one' ;;
                 plugins)  note='shake to find · glass on the windows' ;;
-                extras)   note='Nautilus, VSCodium, Vesktop, Spotify, GTK, your face, the camera, the boot splash' ;;
+                extras)   note='Nautilus, Vesktop, Spotify, GTK, your face, the camera, the boot splash' ;;
             esac
             if (( on[i] )); then box="$ACCENT◉$OFF"; else box="$FAINT○$OFF"; fi
             if (( i == at )); then
@@ -2016,7 +1979,6 @@ main() {
         defaults)  verb_defaults ;;
         cursors)   verb_cursors ;;
         spotify)   verb_spotify ;;
-        vscodium)  verb_vscodium ;;
         nautilus)  verb_nautilus ;;
         vesktop)   verb_vesktop ;;
         face)      verb_face ;;

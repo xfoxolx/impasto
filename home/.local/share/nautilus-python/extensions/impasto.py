@@ -1,7 +1,7 @@
 # ╭──────────────────────────────────────────────────────────────────────────╮
 # │                                                                          │
 # │   I M P A S T O                                                          │
-# │   the file manager's right-click menu · terminal, editor, wallpaper      │
+# │   the file manager's right-click menu · terminal and wallpaper            │
 # │                                                                          │
 # │   github.com/andreumassanet/impasto                                      │
 # │                                                                          │
@@ -58,8 +58,6 @@ class ImpastoMenu(GObject.GObject, Nautilus.MenuProvider):
         items = []
         if len(files) == 1 and files[0].is_directory():
             items += folder_items(paths[0])
-        items.append(item("editor", "Open in the Editor", "accessories-text-editor",
-                          lambda: run("codium", *paths)))
         if len(files) == 1 and files[0].get_mime_type().startswith(("image/", "video/")):
             items.append(item("wallpaper", "Set as Wallpaper",
                               "preferences-desktop-wallpaper",
@@ -72,7 +70,4 @@ class ImpastoMenu(GObject.GObject, Nautilus.MenuProvider):
         path = folder.get_location().get_path()
         if path is None:
             return []
-        return folder_items(path) + [
-            item("editor-here", "Open in the Editor", "accessories-text-editor",
-                 lambda: run("codium", path)),
-        ]
+        return folder_items(path)
